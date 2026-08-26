@@ -1,0 +1,75 @@
+{
+  "name": "arraypress/edd-registrars",
+  "description": "Registration helpers for Easy Digital Downloads: admin columns, download fields, email tags, exporters, export columns, customer stats, log views and recount tools.",
+  "type": "library",
+  "license": "GPL-2.0-or-later",
+  "homepage": "https://github.com/arraypress/edd-registrars/",
+  "authors": [
+    {
+      "name": "David Sherlock",
+      "homepage": "https://arraypress.com/"
+    }
+  ],
+  "require": {
+    "php": ">=8.3",
+    "arraypress/wp-register-columns": "*",
+    "arraypress/wp-array-utils": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "ArrayPress\\EDD\\Register\\": "src/"
+    },
+    "files": [
+      "src/ColumnFunctions.php",
+      "src/CustomerStatFunctions.php",
+      "src/EmailTagFunctions.php",
+      "src/ExportColumnFunctions.php",
+      "src/ExporterFunctions.php",
+      "src/FieldFunctions.php",
+      "src/LogViewFunctions.php",
+      "src/RecountFunctions.php"
+    ]
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "sort-packages": true,
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": false
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "support": {
+    "issues": "https://github.com/arraypress/edd-registrars/issues",
+    "source": "https://github.com/arraypress/edd-registrars"
+  },
+  "keywords": [
+    "easy-digital-downloads",
+    "edd",
+    "wordpress",
+    "admin",
+    "columns",
+    "exporters",
+    "email-tags"
+  ],
+  "require-dev": {
+    "phpcompatibility/phpcompatibility-wp": "^2.1",
+    "phpunit/phpunit": "^12.0",
+    "squizlabs/php_codesniffer": "^3.13.5",
+    "wp-coding-standards/wpcs": "^3.4"
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "ArrayPress\\EDD\\Register\\Tests\\": "tests/"
+    },
+    "exclude-from-classmap": [
+      "/tests/bootstrap.php"
+    ]
+  },
+  "scripts": {
+    "test": "phpunit",
+    "lint": "phpcs",
+    "format": "phpcbf --standard=phpcs-format.xml.dist",
+    "format:check": "phpcs --standard=phpcs-format.xml.dist"
+  }
+}
