@@ -5,7 +5,7 @@
  * Handles custom column registration for Easy Digital Downloads Commissions.
  * Integrates with EDD Commissions table filters and provides commission-specific functionality.
  *
- * @package     ArrayPress\EDD\RegisterColumns
+ * @package     ArrayPress\EDD\Register
  * @copyright   Copyright (c) 2024, ArrayPress Limited
  * @license     GPL2+
  * @version     1.0.0
@@ -23,7 +23,7 @@ use ArrayPress\EDD\Register\Abstracts\Columns;
  *
  * Manages custom columns for EDD commissions in the WordPress admin.
  *
- * @package ArrayPress\EDD\RegisterColumns
+ * @package ArrayPress\EDD\Register
  */
 class Commissions extends Columns {
 

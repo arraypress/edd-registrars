@@ -6,7 +6,7 @@
  * Since downloads are a custom post type, this class integrates with WordPress's
  * post column filters while maintaining EDD-specific functionality.
  *
- * @package     ArrayPress\EDD\RegisterColumns
+ * @package     ArrayPress\EDD\Register
  * @copyright   Copyright (c) 2024, ArrayPress Limited
  * @license     GPL2+
  * @version     1.0.0
@@ -24,7 +24,7 @@ use ArrayPress\EDD\Register\Abstracts\Columns;
  *
  * Manages custom columns for EDD downloads/products in the WordPress admin.
  *
- * @package ArrayPress\EDD\RegisterColumns
+ * @package ArrayPress\EDD\Register
  */
 class Downloads extends Columns {
 

@@ -7,7 +7,7 @@
  * already there, and getting that wrong does not error -- the column simply
  * turns up somewhere else, or not at all.
  *
- * @package ArrayPress\EDD\RegisterColumns
+ * @package ArrayPress\EDD\Register
  */
 
 declare( strict_types=1 );

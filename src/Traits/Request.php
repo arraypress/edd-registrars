@@ -4,7 +4,7 @@
  *
  * Provides methods for handling request parameters, particularly for sorting.
  *
- * @package     ArrayPress\EDD\RegisterColumns
+ * @package     ArrayPress\EDD\Register
  * @copyright   Copyright (c) 2024, ArrayPress Limited
  * @license     GPL2+
  * @version     1.0.0

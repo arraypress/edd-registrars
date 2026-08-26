@@ -6,7 +6,7 @@
  * right shape for the library and an awkward one for a test. This exposes
  * render_field() and nothing else.
  *
- * @package ArrayPress\EDD\RegisterFields
+ * @package ArrayPress\EDD\Register
  */
 
 declare( strict_types=1 );

@@ -7,7 +7,7 @@
  * injection. These tests assert the exact rendered string rather than
  * "contains", because "contains" cannot tell one escape from two.
  *
- * @package ArrayPress\EDD\RegisterFields
+ * @package ArrayPress\EDD\Register
  */
 
 declare( strict_types=1 );

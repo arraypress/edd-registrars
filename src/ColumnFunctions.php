@@ -5,7 +5,7 @@
  * Provides convenient helper functions for registering custom columns in Easy Digital Downloads.
  * These functions are in the global namespace for easy use throughout your codebase.
  *
- * @package     ArrayPress\EDD\RegisterColumns
+ * @package     ArrayPress\EDD\Register
  * @copyright   Copyright (c) 2024, ArrayPress Limited
  * @license     GPL2+
  * @version     1.0.0
