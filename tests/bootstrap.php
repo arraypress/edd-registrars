@@ -226,7 +226,23 @@ if ( ! function_exists( 'is_wp_error' ) ) {
 }
 
 if ( ! function_exists( 'add_filter' ) ) {
-	function add_filter( ...$args ) {
+	/**
+	 * Record a filter, beside the actions, as WordPress keeps them.
+	 *
+	 * @param string $hook     Hook name.
+	 * @param mixed  $callback Callback.
+	 * @param int    $priority Priority.
+	 * @param int    $args     Accepted arguments.
+	 *
+	 * @return bool
+	 */
+	function add_filter( string $hook, $callback, int $priority = 10, int $args = 1 ): bool {
+		$GLOBALS['edd_registrars']['actions'][ $hook ][] = [
+			'callback' => $callback,
+			'priority' => $priority,
+			'args'     => $args,
+		];
+
 		return true;
 	}
 }
@@ -388,6 +404,27 @@ if ( ! function_exists( 'edd_add_email_tag' ) ) {
 	 */
 	function edd_add_email_tag( $tag = '', $description = '', $func = '', $label = '', $contexts = null, $recipients = null ) {
 		$GLOBALS['edd_registered_email_tags'][] = compact( 'tag', 'description', 'func', 'label', 'contexts', 'recipients' );
+	}
+}
+
+/*
+ * The lists EDD's conditions offer as options, read when a group is built.
+ */
+foreach ( [
+	'edd_get_download_types'   => [ 'default' => 'Default', 'bundle' => 'Bundle' ],
+	'edd_get_currencies'       => [ 'USD' => 'US Dollars', 'EUR' => 'Euros' ],
+	'edd_get_country_list'     => [ 'US' => 'United States', 'GB' => 'United Kingdom' ],
+	'edd_get_payment_statuses' => [ 'complete' => 'Completed', 'failed' => 'Failed' ],
+	'edd_get_payment_gateways' => [ 'stripe' => [ 'admin_label' => 'Stripe' ] ],
+] as $edd_registrars_fn => $edd_registrars_list ) {
+	if ( ! function_exists( $edd_registrars_fn ) ) {
+		eval( 'function ' . $edd_registrars_fn . '() { return ' . var_export( $edd_registrars_list, true ) . '; }' ); // phpcs:ignore Squiz.PHP.Eval.Discouraged
+	}
+}
+
+if ( ! function_exists( 'get_post_stati' ) ) {
+	function get_post_stati( $args = [], $output = 'names' ): array {
+		return [ 'publish' => (object) [ 'name' => 'publish', 'label' => 'Published' ] ];
 	}
 }
 

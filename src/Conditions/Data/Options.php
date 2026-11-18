@@ -1,0 +1,195 @@
+<?php
+/**
+ * EDD Options Helper
+ *
+ * Provides utilities for EDD condition options.
+ *
+ * @package     ArrayPress\EDD\Register\Conditions\Data
+ * @copyright   Copyright (c) 2026, ArrayPress Limited
+ * @license     GPL-2.0-or-later
+ * @since       1.0.0
+ * @author      David Sherlock
+ */
+
+declare( strict_types=1 );
+
+namespace ArrayPress\EDD\Register\Conditions\Data;
+
+use EDD\Reports;
+
+/**
+ * Class Options
+ *
+ * Option utilities for EDD conditions.
+ */
+class Options {
+
+	/**
+	 * Get discount options for AJAX select.
+	 *
+	 * @param string|null $search Search term.
+	 * @param array|null  $ids    Specific IDs to retrieve.
+	 *
+	 * @return array<array{value: string, label: string}>
+	 */
+	public static function get_discount_options( ?string $search, ?array $ids ): array {
+		$args = [
+			'number' => 20,
+			'status' => [ 'active', 'inactive' ],
+		];
+
+		if ( $ids ) {
+			$args['id__in'] = array_map( 'intval', $ids );
+		} elseif ( $search ) {
+			$args['search'] = $search;
+		}
+
+		$discounts = edd_get_discounts( $args );
+
+		if ( empty( $discounts ) ) {
+			return [];
+		}
+
+		return array_map( function ( $discount ) {
+			return [
+				'value' => (string) $discount->id,
+				'label' => $discount->code . ' (' . $discount->name . ')',
+			];
+		}, $discounts );
+	}
+
+	/**
+	 * Get customer options for AJAX select.
+	 *
+	 * @param string|null $search Search term.
+	 * @param array|null  $ids    Specific IDs to retrieve.
+	 *
+	 * @return array<array{value: string, label: string}>
+	 */
+	public static function get_customer_options( ?string $search, ?array $ids ): array {
+		$args = [
+			'number' => 20,
+		];
+
+		if ( $ids ) {
+			$args['id__in'] = array_map( 'intval', $ids );
+		} elseif ( $search ) {
+			$args['search']         = $search;
+			$args['search_columns'] = [ 'name', 'email' ];
+		}
+
+		$customers = edd_get_customers( $args );
+
+		if ( empty( $customers ) ) {
+			return [];
+		}
+
+		return array_map( function ( $customer ) {
+			return [
+				'value' => (string) $customer->id,
+				'label' => $customer->name . ' (' . $customer->email . ')',
+			];
+		}, $customers );
+	}
+
+	/**
+	 * Get country options.
+	 *
+	 * @return array<array{value: string, label: string}>
+	 */
+	public static function get_countries(): array {
+		return self::to_options( edd_get_country_list() );
+	}
+
+	/**
+	 * Get country options.
+	 *
+	 * @return array<array{value: string, label: string}>
+	 */
+	public static function get_product_types(): array {
+		$types = edd_get_download_types();
+
+		// EDD keys the plain download as '' in this list and reports it as
+		// 'default' from the download itself, so "Type is Single Product"
+		// never matched.
+		if ( array_key_exists( '', $types ) ) {
+			$types = [ 'default' => $types[''] ] + $types;
+			unset( $types[''] );
+		}
+
+		return self::to_options( $types );
+	}
+
+	/**
+	 * Get date range options for period-based conditions.
+	 *
+	 * @return array<array{value: string, label: string}>
+	 */
+	public static function get_date_ranges(): array {
+		// Loaded here rather than at file scope: this class is autoloaded, and a
+		// top-level require against EDD_PLUGIN_DIR fatals the moment anything
+		// touches it on a site without EDD.
+		if ( ! function_exists( 'EDD\Reports\get_dates_filter_options' ) ) {
+			require_once EDD_PLUGIN_DIR . 'includes/reports/reports-functions.php';
+		}
+
+		$edd_options = Reports\get_dates_filter_options();
+
+		// Remove 'other' (custom) as it doesn't make sense for conditions
+		unset( $edd_options['other'] );
+
+		return self::to_options( $edd_options );
+	}
+
+	/**
+	 * Get order status options.
+	 *
+	 * @return array<array{value: string, label: string}>
+	 */
+	public static function get_order_statuses(): array {
+		return self::to_options( edd_get_payment_statuses() );
+	}
+
+	/**
+	 * Get gateway options.
+	 *
+	 * @return array<array{value: string, label: string}>
+	 */
+	public static function get_gateways(): array {
+		return self::to_options( edd_get_payment_gateways(), 'admin_label' );
+	}
+
+	/**
+	 * Get currency options.
+	 *
+	 * @return array<array{value: string, label: string}>
+	 */
+	public static function get_currencies(): array {
+		return self::to_options( edd_get_currencies() );
+	}
+
+	/**
+	 * A key => label list as the value/label pairs a select takes.
+	 *
+	 * @param array  $items     Key => label, or key => array holding the label.
+	 * @param string $label_key The label's key when an item is an array.
+	 *
+	 * @return array<int, array{value: string, label: string}>
+	 */
+	private static function to_options( array $items, string $label_key = '' ): array {
+		$options = [];
+
+		foreach ( $items as $key => $value ) {
+			if ( is_array( $value ) ) {
+				$value = $value[ $label_key ] ?? $key;
+			}
+
+			$options[] = [
+				'value' => (string) $key,
+				'label' => (string) $value,
+			];
+		}
+
+		return $options;
+	}
+}
