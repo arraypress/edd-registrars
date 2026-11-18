@@ -39,3 +39,8 @@
 /EXAMPLES.md export-ignore
 /CHANGELOG.md export-ignore
 /SECURITY.md export-ignore
+
+# A local clone's own installs. Never in a git archive anyway, but a
+# Composer path repository (symlink false) mirrors the folder and honours
+# export-ignore, not .gitignore: without this every plugin copied vendor/.
+/vendor export-ignore
