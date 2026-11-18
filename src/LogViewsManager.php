@@ -17,8 +17,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	return;
 }
 
-use function edd_logs_view_page;
-
 /**
  * Class LogViewsManager
  *
@@ -138,9 +136,33 @@ class LogViewsManager {
 
 			// Initialize table class if it exists
 			if ( class_exists( $args['class_name'] ) ) {
-				$logs_table = new $args['class_name']();
-				edd_logs_view_page( $logs_table, $args['id'] );
+				self::render( new $args['class_name'](), $args['id'] );
 			}
 		} );
+	}
+
+	/**
+	 * Print a log view the way EDD prints its own.
+	 *
+	 * EDD 3.6.4 moved the page into EDD\Admin\Tools\Logs::render_page() and
+	 * later dropped edd_logs_view_page(), the function this used to call, so
+	 * opening any registered view was a fatal error. The old function is
+	 * only the fallback for an EDD older than the class.
+	 *
+	 * @param object $logs_table The view's list table.
+	 * @param string $id         The view's id.
+	 *
+	 * @return void
+	 */
+	public static function render( object $logs_table, string $id ): void {
+		if ( is_callable( [ 'EDD\\Admin\\Tools\\Logs', 'render_page' ] ) ) {
+			\EDD\Admin\Tools\Logs::render_page( $logs_table, $id );
+
+			return;
+		}
+
+		if ( function_exists( 'edd_logs_view_page' ) ) {
+			edd_logs_view_page( $logs_table, $id );
+		}
 	}
 }

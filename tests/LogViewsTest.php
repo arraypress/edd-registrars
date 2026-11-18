@@ -141,6 +141,21 @@ final class LogViewsTest extends TestCase {
 	}
 
 	/**
+	 * A view is printed by EDD's own Logs::render_page(): the function this
+	 * used to call is gone from EDD, and calling it was a fatal error.
+	 */
+	public function test_a_view_is_printed_by_edd_tools_logs(): void {
+		if ( ! class_exists( 'EDD\\Admin\\Tools\\Logs' ) ) {
+			eval( 'namespace EDD\\Admin\\Tools; class Logs { public static array $calls = []; public static function render_page( $table, string $tag = "" ): void { self::$calls[] = [ $table, $tag ]; } }' ); // phpcs:ignore Squiz.PHP.Eval.Discouraged
+		}
+
+		$table = new \stdClass();
+		\ArrayPress\EDD\Register\LogViewsManager::render( $table, 'product_notes' );
+
+		$this->assertSame( [ [ $table, 'product_notes' ] ], \EDD\Admin\Tools\Logs::$calls );
+	}
+
+	/**
 	 * Two views can coexist.
 	 */
 	public function test_two_views_coexist(): void {
