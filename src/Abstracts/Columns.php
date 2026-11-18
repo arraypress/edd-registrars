@@ -13,13 +13,13 @@ declare( strict_types=1 );
 
 namespace ArrayPress\EDD\Register\Abstracts;
 
-use ArrayPress\RegisterColumns\Abstracts\Columns as BaseColumns;
+use SugarCommerce\Columns\Abstracts\Columns as BaseColumns;
 use Exception;
 
 /**
  * Registering custom columns on Easy Digital Downloads' tables.
  *
- * This was a copy of wp-register-columns with the namespace changed: the same
+ * This was a copy of sugarcommerce/columns (then wp-register-columns) with the namespace changed: the same
  * fourteen methods, the same trait, the same three hundred lines, differing
  * only in doc wording. Two copies of a thing is one chance for a fix to land
  * in the wrong one, and they had already drifted — the sortable-columns bug

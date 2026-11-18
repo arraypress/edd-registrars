@@ -58,6 +58,8 @@ edd_register_order_columns( [
 * PHP 8.3 or later
 * WordPress 7.1 or later
 * Easy Digital Downloads 3.0 or later
+* sugarcommerce/columns (the table columns' base class; it replaced
+  arraypress/wp-register-columns, and wp-array-utils is no longer needed)
 
 ## License
 

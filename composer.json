@@ -12,9 +12,17 @@
   ],
   "require": {
     "php": ">=8.3",
-    "arraypress/wp-array-utils": "dev-main",
-    "arraypress/wp-register-columns": "dev-main"
+    "sugarcommerce/columns": "dev-main"
   },
+  "repositories": [
+    {
+      "type": "path",
+      "url": "../sugarcommerce/*",
+      "options": {
+        "symlink": false
+      }
+    }
+  ],
   "autoload": {
     "psr-4": {
       "ArrayPress\\EDD\\Register\\": "src/"
