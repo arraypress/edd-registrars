@@ -32,7 +32,7 @@ class Subscriptions extends Columns {
 	 *
 	 * @var string
 	 */
-	protected const OBJECT_TYPE = 'edd_subscription';
+	protected const string OBJECT_TYPE = 'edd_subscription';
 
 	/**
 	 * Load the necessary hooks for custom columns.

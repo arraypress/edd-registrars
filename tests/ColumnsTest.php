@@ -24,7 +24,7 @@ use ReflectionProperty;
  */
 final class TestTable extends Columns {
 
-	protected const OBJECT_TYPE = 'test_object';
+	protected const string OBJECT_TYPE = 'test_object';
 
 	protected function is_screen(): bool {
 		return true;

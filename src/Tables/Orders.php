@@ -32,7 +32,7 @@ class Orders extends Columns {
 	 *
 	 * @var string
 	 */
-	protected const OBJECT_TYPE = 'edd_order';
+	protected const string OBJECT_TYPE = 'edd_order';
 
 	/**
 	 * Load the necessary hooks for custom columns.

@@ -32,7 +32,7 @@ class Commissions extends Columns {
 	 *
 	 * @var string
 	 */
-	protected const OBJECT_TYPE = 'edd_commission';
+	protected const string OBJECT_TYPE = 'edd_commission';
 
 	/**
 	 * Load the necessary hooks for custom columns.

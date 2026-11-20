@@ -33,7 +33,7 @@ class Downloads extends Columns {
 	 *
 	 * @var string
 	 */
-	protected const OBJECT_TYPE = 'download';
+	protected const string OBJECT_TYPE = 'download';
 
 	/**
 	 * Load the necessary hooks for custom columns.

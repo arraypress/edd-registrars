@@ -32,7 +32,7 @@ class Discounts extends Columns {
 	 *
 	 * @var string
 	 */
-	protected const OBJECT_TYPE = 'edd_adjustment';
+	protected const string OBJECT_TYPE = 'edd_adjustment';
 
 	/**
 	 * Load the necessary hooks for custom columns.

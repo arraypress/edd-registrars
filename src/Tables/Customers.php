@@ -32,7 +32,7 @@ class Customers extends Columns {
 	 *
 	 * @var string
 	 */
-	protected const OBJECT_TYPE = 'edd_customer';
+	protected const string OBJECT_TYPE = 'edd_customer';
 
 	/**
 	 * Load the necessary hooks for custom columns.
